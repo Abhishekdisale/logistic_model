@@ -16,8 +16,8 @@ import numpy as np
 # -------------------------------
 model = joblib.load("logistic_model.pkl")
 
-st.title("Diabetes Risk Prediction App")
-st.write("Predict the risk of Diabetes based on patient features.")
+st.title("Diabetes Prediction App")
+st.write("Predict whether a patient has diabetes or not based on features.")
 
 # -------------------------------
 # User Inputs
@@ -32,20 +32,16 @@ age = st.number_input("Age", min_value=0, value=30)
 # -------------------------------
 # Prepare input for prediction
 # -------------------------------
-# Order of features must match training
 input_data = np.array([[pregnancies, glucose, blood_pressure, bmi, dpf, age]])
 
 # -------------------------------
 # Prediction
 # -------------------------------
 if st.button("Predict"):
-    # Class prediction (0 = No Diabetes, 1 = Diabetes)
+    # Class prediction: 0 = Does Not Have Diabetes, 1 = Has Diabetes
     prediction = model.predict(input_data)[0]
 
-    # Probability of having diabetes
-    probability = model.predict_proba(input_data)[0][1]
-
     if prediction == 1:
-        st.error(f"High chance of Diabetes ❌ (Probability: {probability:.2f})")
+        st.error("Has Diabetes ❌")
     else:
-        st.success(f"Low chance of Diabetes ✅ (Probability: {probability:.2f})")
+        st.success("Does NOT Have Diabetes ✅")
